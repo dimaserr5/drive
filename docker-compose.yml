@@ -48,6 +48,20 @@ services:
             test: ["CMD", "mysqladmin", "ping", "-p${DB_PASSWORD}"]
             retries: 3
             timeout: 5s
+    postgres:
+        image: postgres
+        environment:
+            POSTGRES_DB: "a4"
+            POSTGRES_USER: "a4"
+            POSTGRES_PASSWORD: "a4"
+            PGDATA: "/var/pgbase"
+        volumes:
+            - ../2. Init Database:/docker-entrypoint-initdb.d
+            - .:/var/lib/postgresql/data
+        ports:
+            - "5432:5432"
+        networks:
+            - sail
     redis:
         image: 'redis:alpine'
         ports:
