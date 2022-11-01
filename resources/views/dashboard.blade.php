@@ -61,7 +61,15 @@
                     data: formData,
                     dataType : 'json',
                     success: function(msg){
-                        console.log(msg);
+                        if(msg.status == 'error') {
+                            const notyf = new Notyf();
+                            notyf.error(msg.text);
+                        }
+
+                        if(msg.status == "ok"){
+                            const notyf = new Notyf();
+                            notyf.success(msg.text);
+                        }
                     }
                 });
             }

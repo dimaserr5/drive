@@ -17,7 +17,7 @@ return new class extends Migration
         Schema::create('settings', function (Blueprint $table) {
             $table->id();
             $table->string('progectName')->default(config('app.name'));
-            $table->integer('max_file_size')->default(20);
+            $table->integer('max_file_size')->default(20971520);
         });
 
         DB::table('settings')->insert([
