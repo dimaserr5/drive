@@ -9,7 +9,9 @@ use App\Models\settingsProgect;
 class dashboardController extends Controller
 {
     public function getPage() {
-        $data['test'] = 1;
+
+        $data['settings'] = settingsProgect::getSettings();
+
         return view('dashboard', $data);
     }
 
@@ -20,15 +22,17 @@ class dashboardController extends Controller
 
         if(!$file_find) {
             $error = "Ошибка, выберите файл";
+        }else {
+            $error = "";
         }
 
 
 
-        if(!$error) {
+        /*if(!$error) {
             $upload_folder = 'public/folder';
             $filename = $file_find->getClientOriginalName();
             Storage::putFileAs($upload_folder, $file_find, $filename);
-        }
+        }*/
 
 
         if($error) {
@@ -37,7 +41,7 @@ class dashboardController extends Controller
             $data = '{"status":"ok", "text":"Успешно"}';
         }
 
-        return json_encode($data);;
+        return json_encode($data);
 
     }
 }
