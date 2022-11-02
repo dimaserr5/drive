@@ -21,8 +21,20 @@ return new class extends Migration
         });
 
         DB::table('file_attr')->insert([
+            'types' => "folder",
+            'img' => "/storage/imgs/files_img/folder.png"
+        ]);
+        DB::table('file_attr')->insert([
             'types' => "png",
-            ''
+            'img' => "/storage/imgs/files_img/image.png"
+        ]);
+        DB::table('file_attr')->insert([
+            'types' => "jpg",
+            'img' => "/storage/imgs/files_img/image.png"
+        ]);
+        DB::table('file_attr')->insert([
+            'types' => "jpeg",
+            'img' => "/storage/imgs/files_img/image.png"
         ]);
     }
 
