@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use App\Models\settingsProgect;
 use App\Models\blacklisttypesModel;
@@ -12,6 +13,8 @@ class dashboardController extends Controller
     public function getPage() {
 
         $data['settings'] = settingsProgect::getSettings();
+
+
 
         return view('dashboard', $data);
     }
@@ -37,23 +40,20 @@ class dashboardController extends Controller
             $error = "Ошибка, запрещённый тип файла";
         }
 
-
-
-
-        /*if(!$error) {
-            $upload_folder = 'public/folder';
-            $filename = $file_find->getClientOriginalName();
-            Storage::putFileAs($upload_folder, $file_find, $filename);
-        }*/
-
-
-
-
-
         if($error) {
             $data = '{"status":"error", "text":"'.$error.'"}';
         }else {
-            $data = '{"status":"ok", "text":"Успешно"}';
+
+            $upload_folder = 'public/user-'.Auth::id();
+            $filename = $file_find->getClientOriginalName();
+            $filename_download = rand(100,999999)."-".rand(100,9999999).$filename;
+            Storage::putFileAs($upload_folder, $file_find, $filename_download);
+            Storage::download($upload_folder."/".$filename_download);
+            echo Storage::url($upload_folder."/".$filename_download);
+            exit();
+
+
+             //$data = '{"status":"ok", "text":"Успешно"}';
         }
 
         return json_decode($data);

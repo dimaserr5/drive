@@ -37,6 +37,7 @@
                         <button onclick="addfolder();" style="margin: 6px;" class="btn btn-secondary">Создать папку</button>
                     </div>
                     Файлов нет
+
                 </div>
             </div>
         </div>
