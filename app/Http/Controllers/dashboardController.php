@@ -36,6 +36,7 @@ class dashboardController extends Controller
                     'name' => $file->name_file,
                     'storage' => $file->storage,
                     'type' => $file->type,
+                    'id' => $file->id,
                 );
 
             }

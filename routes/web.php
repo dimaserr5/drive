@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\dashboardController;
+use App\Http\Controllers\fileInfoController;
+use App\Http\Controllers\files\filesController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -26,5 +28,8 @@ Route::middleware('auth')->group(function () {
 
     Route::post('/dashboard/add',[dashboardController::class, 'add'])->name('dashboard/add');
     Route::post('/dashboard/addfolder',[dashboardController::class, 'addfolder'])->name('dashboard/addfolder');
+
+    Route::get('/file_info/{id}',[fileInfoController::class, 'file_info'])->name('fileinfo');
+    Route::post('/file_info/editname',[filesController::class, 'editname'])->name('editfilename');
 
 });

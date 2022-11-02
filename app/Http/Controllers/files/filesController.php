@@ -3,10 +3,73 @@
 namespace App\Http\Controllers\files;
 
 use App\Http\Controllers\Controller;
+use App\Models\files\filesModel;
+use App\Models\user\userModel;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class filesController extends Controller
 {
 
-    //
+    public function editname(Request $request){
+        $name_file = $request->input('folder_name');
+        $id_file = $request->input('file_id');
+
+        $error = "";
+
+        if(!$name_file) {
+            $error = "Ошибка, укажите новое имя файла";
+        }else {
+            if(!$id_file) {
+                $error = "Ошибка, перезагрузите страницу";
+            }else {
+                $file_info = filesModel::getInfoFile($id_file);
+                if(!$file_info OR !$file_info->user_id == auth::Id()) {
+                    $error = "Ошибка доступа";
+                }else {
+                    if(!preg_replace('/[^a-zA-Zа-яА-Я0-9 ]/ui', '',$name_file )) {
+                        $error = "Ошибка, разрешены только буквы и цифры";
+                    }else {
+                        if(mb_strlen($name_file,'UTF-8') > 15) {
+                            $error = "Ошибка, название файла может быть до 15 символов";
+                        }else {
+                            if($file_info->type == "folder") {
+                                $error = "Ошибка";
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+
+        if($error) {
+            $data = '{"status":"error", "text":"'.$error.'"}';
+        }else {
+
+            $mytime = Carbon::now();
+
+            $chars = ['.'];
+
+            $filter_name = str_replace($chars, '', $name_file); // PHP код
+
+            $exp_name = explode('.', $file_info->name_file);
+
+            $new_file_name = $filter_name.".".$exp_name[1];
+
+            filesModel::editFileName($file_info->id, $new_file_name);
+
+            DB::table('user_history')->insert([
+                'user_id' => auth::id(),
+                'text' => 'Переименован файл с '.$exp_name[0].'.'.$exp_name[1].' на '.$new_file_name,
+                'created_at' => $mytime->toDateTimeString(),
+            ]);
+
+            $data = '{"status":"ok", "text":"Успешно"}';
+        }
+        return json_decode($data);
+
+    }
 }

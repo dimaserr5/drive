@@ -35,12 +35,24 @@ class filesModel extends Model
          return $files;
      }
 
+     public static function getInfoFile($file_id){
+         $file = DB::table('user_files')->where('id', $file_id)->first();
+
+         return $file;
+     }
+
      public static function getFileAttr($type) {
 
          $type_file = DB::table('file_attr')->where('type', $type)->first();
 
          return $type_file;
 
+     }
+
+     public static function editFileName($file_id, $name){
+         DB::table('user_files')
+             ->where('id', $file_id)
+             ->update(['name_file' => $name]);
      }
     use HasFactory;
 }

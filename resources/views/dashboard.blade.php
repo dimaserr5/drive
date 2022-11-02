@@ -64,12 +64,21 @@
                     <?php else : ?>
                         <div class="files_block">
                             @foreach($my_files as $file)
-                                <div class="file">
-                                    <img class="img_file" src="{{ $file['image'] }}">
-                                    <div style="margin: 10px;">
-                                        <span>{{ $file['name'] }}</span>
+                                @if($file['type'] == "folder")
+                                    <div onclick="" class="file">
+                                            <a href="dashboard/{{ $file['storage'] }}"><img class="img_file" src="{{ $file['image'] }}"></a>
+                                            <div style="margin: 10px;">
+                                                <span>{{ $file['name'] }}</span>
+                                            </div>
                                     </div>
-                                </div>
+                                @else
+                                   <div class="file">
+                                       <a href="file_info/{{ $file['id'] }}"><img class="img_file" src="{{ $file['image'] }}"></a>
+                                            <div style="margin: 10px;">
+                                                <span>{{ $file['name'] }}</span>
+                                            </div>
+                                    </div>
+                                @endif
                             @endforeach
                         </div>
                     <?php endif; ?>
