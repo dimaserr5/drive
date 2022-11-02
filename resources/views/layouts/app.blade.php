@@ -12,7 +12,7 @@
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/css/style.css', 'resources/js/app.js','resources/js/jquery.js'])
-        @vite(['resources/bootstrap/css/bootstrap.css', 'resources/bootstrap/js/bootstrap.js'])
+        @vite(['resources/bootstrap/css/bootstrap.css', 'resources/bootstrap/js/bootstrap.bundle.js'])
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css">
     </head>
     <body class="font-sans antialiased">

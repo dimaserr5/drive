@@ -62,7 +62,7 @@ class dashboardController extends Controller
             $data = '{"status":"error", "text":"'.$error.'"}';
         }else {
 
-            $upload_folder = 'public/userfiles/user-'.Auth::id();
+            $upload_folder = 'public/user-'.Auth::id();
 
             $filename = $file_find->getClientOriginalName();
 
