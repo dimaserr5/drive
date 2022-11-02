@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\tools\toolsController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -15,6 +16,8 @@ class dashboardController extends Controller
     public function getPage() {
 
         $data['settings'] = settingsProgect::getSettings();
+
+        $user_info = userModel::getUser(auth::id());
 
         $my_files = filesModel::getMyFiles(auth::id());
 
@@ -40,9 +43,23 @@ class dashboardController extends Controller
                 );
 
             }
+
+            $my_files_all = filesModel::getMyFiles(auth::id(),'all');
+
+            $data['all_size_file'] = 0;
+
+            if($my_files_all) {
+                foreach ($my_files_all as $file) {
+
+                    $data['all_size_file'] = $data['all_size_file'] + $file->file_size;
+
+                }
+            }
         }
 
+        $data['all_size_file'] = toolsController::formatSizeUnits($data['all_size_file']);
 
+        $data['access_size'] = toolsController::formatSizeUnits($user_info->mem_limit);
 
         return view('dashboard', $data);
     }
@@ -59,6 +76,7 @@ class dashboardController extends Controller
                 $my_files = filesModel::getMyFiles(auth::id(),$folder);
 
                 $data['my_files'] = array();
+                $data['folder_size'] = 0;
 
                 if($my_files) {
                     foreach ($my_files as $file) {
@@ -79,10 +97,15 @@ class dashboardController extends Controller
                             'id' => $file->id,
                         );
 
+                        $data['folder_size'] = $data['folder_size'] + $file->file_size;
+
                     }
                 }
 
+
                 $data['folder_name_storage'] = $folder;
+                $data['folder_name'] = $get_folder->name_file;
+                $data['folder_size'] = toolsController::formatSizeUnits($data['folder_size']);
                 return view('dashboardfolder', $data);
             }
         }

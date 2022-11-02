@@ -47,10 +47,16 @@ class filesModel extends Model
      public static function getMyFiles($user_id, $folder = null){
 
         if($folder) {
-            $files = DB::table('user_files')->where([
-                ['user_id', '=', $user_id],
-                ['folder', '=', $folder],
-            ])->get();
+            if($folder == "all") {
+                $files = DB::table('user_files')->where([
+                    ['user_id', '=', $user_id],
+                ])->get();
+            }else {
+                $files = DB::table('user_files')->where([
+                    ['user_id', '=', $user_id],
+                    ['folder', '=', $folder],
+                ])->get();
+            }
         }else {
             $files = DB::table('user_files')->where([
                 ['user_id', '=', $user_id],

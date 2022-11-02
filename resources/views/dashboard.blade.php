@@ -84,6 +84,10 @@
                     <?php endif; ?>
 
                 </div>
+                <div class="p-6 bg-white border-b border-gray-200">
+                    <span>Общий размер всех файлов: {{ $all_size_file }}</span><br>
+                    <span>Доступно места: {{ $access_size }}</span>
+                </div>
             </div>
         </div>
     </div>
