@@ -20,6 +20,8 @@ return new class extends Migration
             $table->integer('user_id');
             $table->string('name_file');
             $table->string('folder')->default('no');
+            $table->string('public_link')->nullable('');
+            $table->string('file_size');
             $table->timestamps();
         });
     }

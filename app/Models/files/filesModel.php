@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\DB;
 
 class filesModel extends Model
 {
-    public static function addFile($file_type,$file_storage,$name_file){
+    public static function addFile($file_type,$file_storage,$name_file, $size){
         $mytime = Carbon::now();
 
         DB::table('user_files')->insert([
@@ -18,6 +18,8 @@ class filesModel extends Model
             'storage' => $file_storage,
             'user_id' => auth::id(),
             'name_file' => $name_file,
+            'file_size' => $size,
+            'public_link' => "",
             'created_at' => $mytime->toDateTimeString(),
         ]);
         DB::table('user_history')->insert([

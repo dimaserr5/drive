@@ -33,7 +33,7 @@ class dashboardController extends Controller
 
                 $data['my_files'][] = array(
                     'image' => $image,
-                    'name' => $file->name_file,
+                    'name' => substr($file->name_file, 0, 12),
                     'storage' => $file->storage,
                     'type' => $file->type,
                     'id' => $file->id,
@@ -82,7 +82,7 @@ class dashboardController extends Controller
 
             Storage::download($upload_folder."/".$filename_download);
 
-            filesModel::addFile($file_find->getClientOriginalExtension(),Storage::url($upload_folder."/".$filename_download),$file_find->getClientOriginalName());
+            filesModel::addFile($file_find->getClientOriginalExtension(),Storage::url($upload_folder."/".$filename_download),$file_find->getClientOriginalName(),$file_find->getSize());
 
             userModel::limite($file_find->getSize(),'down');
 

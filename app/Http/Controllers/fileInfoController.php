@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\tools\toolsController;
 use App\Models\files\filesModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class fileInfoController extends Controller
 {
@@ -13,19 +15,24 @@ class fileInfoController extends Controller
         if(!$id) {
             return view('dashboard');
         }else {
+
             $file_info = filesModel::getInfoFile($id);
+
             if($file_info AND $file_info->user_id == auth::Id()) {
 
                 $data['file_name'] = $file_info->name_file;
                 $data['file_storage'] = $file_info->storage;
                 $data['file_id'] = $file_info->id;
+                $data['file_size'] = toolsController::formatSizeUnits($file_info->file_size);
+                $data['file_date'] = $file_info->created_at;
 
                 $filter_fail= explode('.',$file_info->name_file);
 
                 $data['filter_fail_name'] = $filter_fail[0];
-
+                $data['filter_fail_ext'] = $filter_fail[1];
 
                 return view('fileinfo',$data);
+
             }else {
                 return to_route('dashboard');
             }

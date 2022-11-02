@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            Информация о файле: {{ $file_name }}
+            Файл: {{ $file_name }}
         </h2>
     </x-slot>
     <div class="modal fade" id="editName" tabindex="-1" aria-labelledby="editNameLabel" aria-hidden="true">
@@ -21,7 +21,6 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
                     <button type="button" id="loadbuttonfile" onclick="editFileName();" class="btn btn-primary">Переименовать файл</button>
-                    <button type="button" id="loadbuttonfile" onclick="editFileName();" class="btn btn-primary">Открыть файл для общего доступа</button>
                 </div>
             </div>
         </div>
@@ -33,8 +32,17 @@
                     <div class="btn-top">
                         <a type="button" style="margin: 6px;"  href="{{ $file_storage }}" download class="btn btn-primary">Скачать файл</a>
                         <button type="button" data-bs-toggle="modal" data-bs-target="#editName" style="margin: 6px;" class="btn btn-secondary">Переименовать файл</button>
+                        <button type="button" data-bs-toggle="modal" data-bs-target="#shareFile" style="margin: 6px;" class="btn btn-info">Открыть файл для общего доступа</button>
+                        <button type="button" data-bs-toggle="modal" data-bs-target="#deleteFile" style="margin: 6px;" class="btn btn-danger">Удалить файл</button>
                     </div>
-
+                    <div class="btn-center">
+                        <span>Информация</span>
+                        <span>Название файла: {{ $file_name }}</span>
+                        <span>Имя файла: {{ $filter_fail_name }}</span>
+                        <span>Расширение файла: {{ $filter_fail_ext }}</span>
+                        <span>Размер файла: {{ $file_size }}</span>
+                        <span>Дата создания: {{ $file_date }}</span>
+                    </div>
                 </div>
             </div>
         </div>
