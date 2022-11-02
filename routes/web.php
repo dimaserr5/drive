@@ -32,6 +32,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/dashboard/{folder}', [dashboardController::class, 'getPageFolder'])->name('dashboardfolder');
 
     Route::get('/profile', [profileController::class, 'get'])->name('profile');
+    Route::post('/profile/getapi', [profileController::class, 'getapi'])->name('profilegetapi');
 
     Route::post('/dashboard/add',[dashboardController::class, 'add'])->name('dashboard/add');
     Route::post('/dashboard/addfolder',[dashboardController::class, 'addfolder'])->name('dashboard/addfolder');

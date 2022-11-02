@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\api\userInfoController;
+use App\Models\user\userModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -14,6 +16,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+/*route::middleware('auth_api')->get('/user/{id}',function (Request $request, $id){
+    $user = userModel::getUser($id);
+    if(!$user['id']) return response('',404);
+    return $user;
+});*/
+
+Route::middleware('auth_api')->group(function () {
+    Route::get('/user', [userInfoController::class, 'getUser'])->name('api/getuser');
 });

@@ -2,6 +2,7 @@
 
 namespace App\Models\user;
 
+use App\Http\Controllers\tools\toolsController;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
@@ -14,8 +15,32 @@ class userModel extends Model
 
         $user = DB::table('users')->where('id', $user_id)->first();
 
-        return $user;
+        if($user) {
+            $user_info = array(
+                'id' => $user->id,
+                'name' => $user->name,
+                'email' => $user->email,
+                'mem_limit' => $user->mem_limit,
+                'created_at' => $user->created_at,
+            );
+        }else {
+            $user_info = "";
+        }
 
+        return $user_info;
+
+    }
+
+    public static function getUserApiKey($user_id){
+        $api_key = DB::table('api_keys')->where('user_id', $user_id)->first();
+        return $api_key;
+    }
+
+    public static function addApiKey($user_id){
+        DB::table('api_keys')->insert([
+            'api_key' => toolsController::generateRandomString(30),
+            'user_id' => auth::id(),
+        ]);
     }
 
     public static function limite($limite, $type){

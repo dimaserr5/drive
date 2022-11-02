@@ -59,7 +59,7 @@ class dashboardController extends Controller
 
         $data['all_size_file'] = toolsController::formatSizeUnits($data['all_size_file']);
 
-        $data['access_size'] = toolsController::formatSizeUnits($user_info->mem_limit);
+        $data['access_size'] = toolsController::formatSizeUnits($user_info['mem_limit']);
 
         return view('dashboard', $data);
     }
