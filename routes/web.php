@@ -25,5 +25,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [dashboardController::class, 'getPage'])->name('dashboard');
 
     Route::post('/dashboard/add',[dashboardController::class, 'add'])->name('dashboard/add');
+    Route::post('/dashboard/addfolder',[dashboardController::class, 'addfolder'])->name('dashboard/addfolder');
 
 });

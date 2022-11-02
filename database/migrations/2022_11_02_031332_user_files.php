@@ -18,6 +18,8 @@ return new class extends Migration
             $table->string('type');
             $table->string('storage');
             $table->integer('user_id');
+            $table->string('name_file');
+            $table->string('folder')->default('no');
             $table->timestamps();
         });
     }
