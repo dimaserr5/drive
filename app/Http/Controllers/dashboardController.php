@@ -23,10 +23,19 @@ class dashboardController extends Controller
         if($my_files) {
             foreach ($my_files as $file) {
 
+                $atr = filesModel::getFileAttr($file->type);
 
+                if($atr) {
+                    $image = $atr->img;
+                }else {
+                    $image = "/storage/imgs/files_img/file.png";
+                }
 
                 $data['my_files'][] = array(
-                    'type'
+                    'image' => $image,
+                    'name' => $file->name_file,
+                    'storage' => $file->storage,
+                    'type' => $file->type,
                 );
 
             }

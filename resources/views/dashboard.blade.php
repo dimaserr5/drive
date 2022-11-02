@@ -62,10 +62,17 @@
                     <?php if(!$my_files) :?>
                      <span>Файлов нет</span>
                     <?php else : ?>
-
+                        <div class="files_block">
+                            @foreach($my_files as $file)
+                                <div class="file">
+                                    <img class="img_file" src="{{ $file['image'] }}">
+                                    <div style="margin: 10px;">
+                                        <span>{{ $file['name'] }}</span>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
                     <?php endif; ?>
-
-
 
                 </div>
             </div>

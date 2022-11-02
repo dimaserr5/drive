@@ -37,7 +37,9 @@ class filesModel extends Model
 
      public static function getFileAttr($type) {
 
+         $type_file = DB::table('file_attr')->where('type', $type)->first();
 
+         return $type_file;
 
      }
     use HasFactory;
