@@ -106,5 +106,12 @@ class filesModel extends Model
         return $folder;
     }
 
+    public static function getPublicFile($file_public_name) {
+        $file = DB::table('user_files')->where([
+            ['public_link', '=', "public_file/".$file_public_name],
+        ])->first();
+        return $file;
+    }
+
     use HasFactory;
 }

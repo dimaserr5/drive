@@ -3,6 +3,7 @@
 use App\Http\Controllers\dashboardController;
 use App\Http\Controllers\fileInfoController;
 use App\Http\Controllers\files\filesController;
+use App\Http\Controllers\public_file\publicFileController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -21,6 +22,8 @@ Route::get('/', function () {
 });
 
 require __DIR__.'/auth.php';
+
+Route::get('/public_file/{file}',[publicFileController::class, 'get'])->name('publicfile');
 
 Route::middleware('auth')->group(function () {
 
