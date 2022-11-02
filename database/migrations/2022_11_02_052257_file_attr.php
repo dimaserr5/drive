@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
@@ -21,19 +22,19 @@ return new class extends Migration
         });
 
         DB::table('file_attr')->insert([
-            'types' => "folder",
+            'type' => "folder",
             'img' => "/storage/imgs/files_img/folder.png"
         ]);
         DB::table('file_attr')->insert([
-            'types' => "png",
+            'type' => "png",
             'img' => "/storage/imgs/files_img/image.png"
         ]);
         DB::table('file_attr')->insert([
-            'types' => "jpg",
+            'type' => "jpg",
             'img' => "/storage/imgs/files_img/image.png"
         ]);
         DB::table('file_attr')->insert([
-            'types' => "jpeg",
+            'type' => "jpeg",
             'img' => "/storage/imgs/files_img/image.png"
         ]);
     }
