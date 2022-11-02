@@ -25,6 +25,7 @@ require __DIR__.'/auth.php';
 Route::middleware('auth')->group(function () {
 
     Route::get('/dashboard', [dashboardController::class, 'getPage'])->name('dashboard');
+    Route::get('/dashboard/{folder}', [dashboardController::class, 'getPageFolder'])->name('dashboardfolder');
 
     Route::post('/dashboard/add',[dashboardController::class, 'add'])->name('dashboard/add');
     Route::post('/dashboard/addfolder',[dashboardController::class, 'addfolder'])->name('dashboard/addfolder');

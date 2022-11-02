@@ -47,6 +47,47 @@ class dashboardController extends Controller
         return view('dashboard', $data);
     }
 
+    public function getPageFolder($folder) {
+        if(!$folder) {
+            return redirect(view('dashboard'));
+        }else {
+            $get_folder = filesModel::checkFolder($folder);
+            if(!$get_folder OR $get_folder->user_id !== auth::id()) {
+                return redirect(view('dashboard'));
+            }else {
+
+                $my_files = filesModel::getMyFiles(auth::id(),$folder);
+
+                $data['my_files'] = array();
+
+                if($my_files) {
+                    foreach ($my_files as $file) {
+
+                        $atr = filesModel::getFileAttr($file->type);
+
+                        if($atr) {
+                            $image = $atr->img;
+                        }else {
+                            $image = "/storage/imgs/files_img/file.png";
+                        }
+
+                        $data['my_files'][] = array(
+                            'image' => $image,
+                            'name' => substr($file->name_file, 0, 12),
+                            'storage' => $file->storage,
+                            'type' => $file->type,
+                            'id' => $file->id,
+                        );
+
+                    }
+                }
+
+                $data['folder_name_storage'] = $folder;
+                return view('dashboardfolder', $data);
+            }
+        }
+    }
+
     public function add(Request $request) {
         header('Content-Type: application/json');
 
@@ -82,7 +123,11 @@ class dashboardController extends Controller
 
             Storage::download($upload_folder."/".$filename_download);
 
-            filesModel::addFile($file_find->getClientOriginalExtension(),Storage::url($upload_folder."/".$filename_download),$file_find->getClientOriginalName(),$file_find->getSize());
+            if($request->input('folder')) {
+                filesModel::addFile($file_find->getClientOriginalExtension(),Storage::url($upload_folder."/".$filename_download),$file_find->getClientOriginalName(),$file_find->getSize(),$request->input('folder'));
+            }else {
+                filesModel::addFile($file_find->getClientOriginalExtension(),Storage::url($upload_folder."/".$filename_download),$file_find->getClientOriginalName(),$file_find->getSize());
+            }
 
             userModel::limite($file_find->getSize(),'down');
 

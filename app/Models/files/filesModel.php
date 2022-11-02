@@ -10,18 +10,32 @@ use Illuminate\Support\Facades\DB;
 
 class filesModel extends Model
 {
-    public static function addFile($file_type,$file_storage,$name_file, $size){
+    public static function addFile($file_type,$file_storage,$name_file, $size, $folder = null){
         $mytime = Carbon::now();
 
-        DB::table('user_files')->insert([
-            'type' => $file_type,
-            'storage' => $file_storage,
-            'user_id' => auth::id(),
-            'name_file' => $name_file,
-            'file_size' => $size,
-            'public_link' => "",
-            'created_at' => $mytime->toDateTimeString(),
-        ]);
+        if($folder) {
+            DB::table('user_files')->insert([
+                'type' => $file_type,
+                'storage' => $file_storage,
+                'user_id' => auth::id(),
+                'name_file' => $name_file,
+                'file_size' => $size,
+                'public_link' => "",
+                'folder' => $folder,
+                'created_at' => $mytime->toDateTimeString(),
+            ]);
+        }else {
+            DB::table('user_files')->insert([
+                'type' => $file_type,
+                'storage' => $file_storage,
+                'user_id' => auth::id(),
+                'name_file' => $name_file,
+                'file_size' => $size,
+                'public_link' => "",
+                'created_at' => $mytime->toDateTimeString(),
+            ]);
+        }
+
         DB::table('user_history')->insert([
             'user_id' => auth::id(),
             'text' => 'Добавлен: '.$file_type,
@@ -30,9 +44,20 @@ class filesModel extends Model
 
     }
 
-     public static function getMyFiles($user_id){
+     public static function getMyFiles($user_id, $folder = null){
 
-         $files = DB::table('user_files')->where('user_id', $user_id)->get();
+        if($folder) {
+            $files = DB::table('user_files')->where([
+                ['user_id', '=', $user_id],
+                ['folder', '=', $folder],
+            ])->get();
+        }else {
+            $files = DB::table('user_files')->where([
+                ['user_id', '=', $user_id],
+                ['folder', '=', 'no'],
+            ])->get();
+        }
+
 
          return $files;
      }
@@ -72,6 +97,14 @@ class filesModel extends Model
                 ->update(['public_link' => ""]);
         }
      }
+
+    public static function checkFolder($folder_id){
+        $folder = DB::table('user_files')->where([
+            ['type', '=', 'folder'],
+            ['storage', '=', $folder_id],
+        ])->first();
+        return $folder;
+    }
 
     use HasFactory;
 }
