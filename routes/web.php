@@ -31,5 +31,7 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/file_info/{id}',[fileInfoController::class, 'file_info'])->name('fileinfo');
     Route::post('/file_info/editname',[filesController::class, 'editname'])->name('editfilename');
+    Route::post('/file_info/deletefile',[filesController::class, 'deletefile'])->name('deletefile');
+    Route::post('/file_info/sharefile',[filesController::class, 'sharefile'])->name('sharefile');
 
 });

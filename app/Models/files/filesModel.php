@@ -56,5 +56,22 @@ class filesModel extends Model
              ->where('id', $file_id)
              ->update(['name_file' => $name]);
      }
+
+     public static function deleteFile($file_id) {
+         DB::table('user_files')->where('id', '=', $file_id)->delete();
+     }
+
+     public static function shareFile($file_id,$type) {
+        if($type == "open") {
+            DB::table('user_files')
+                ->where('id', $file_id)
+                ->update(['public_link' => "public_file/file-".$file_id.rand(100,99999)]);
+        }else {
+            DB::table('user_files')
+                ->where('id', $file_id)
+                ->update(['public_link' => ""]);
+        }
+     }
+
     use HasFactory;
 }

@@ -115,7 +115,7 @@ class dashboardController extends Controller
         }else {
             $generate_folder_name = rand(100,999999)."folder";
 
-            filesModel::addFile("folder",$generate_folder_name,$name_folder);
+            filesModel::addFile("folder",$generate_folder_name,$name_folder,'0');
 
             $data = '{"status":"ok", "text":"Успешно"}';
         }

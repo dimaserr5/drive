@@ -9,6 +9,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class filesController extends Controller
 {
@@ -71,5 +72,88 @@ class filesController extends Controller
         }
         return json_decode($data);
 
+    }
+
+    public function deletefile(Request $request) {
+        $id_file = $request->input('file_id');
+
+        $mytime = Carbon::now();
+
+        $error = "";
+
+        if(!$id_file) {
+            $error = "Ошибка, укажите id имя файла";
+        }else {
+            $file_info = filesModel::getInfoFile($id_file);
+            if(!$file_info OR !$file_info->user_id == auth::Id()) {
+                $error = "Ошибка, доступа";
+            }
+        }
+        if($error) {
+            $data = '{"status":"error", "text":"'.$error.'"}';
+        }else {
+
+            $file_hash_name = substr($file_info->storage,strrpos($file_info->storage,'/'),strlen($file_info->storage));
+
+            Storage::delete('/public/user-'.auth::id().$file_hash_name);
+
+            filesModel::deleteFile($file_info->id);
+
+            userModel::limite($file_info->file_size,'up');
+
+            DB::table('user_history')->insert([
+                'user_id' => auth::id(),
+                'text' => 'Файл: '.$file_info->name_file.' был удалён',
+                'created_at' => $mytime->toDateTimeString(),
+            ]);
+
+            $data = '{"status":"ok", "text":"Успешно"}';
+        }
+        return json_decode($data);
+    }
+
+    public function sharefile(Request $request) {
+
+        $id_file = $request->input('file_id');
+
+        $mytime = Carbon::now();
+
+        $error = "";
+
+        if(!$id_file) {
+            $error = "Ошибка, укажите id имя файла";
+        }else {
+            $file_info = filesModel::getInfoFile($id_file);
+            if(!$file_info OR !$file_info->user_id == auth::Id()) {
+                $error = "Ошибка, доступа";
+            }
+        }
+
+        if($error) {
+            $data = '{"status":"error", "text":"'.$error.'"}';
+        }else {
+
+            if($file_info->public_link) {
+                filesModel::shareFile($id_file,'close');
+
+                DB::table('user_history')->insert([
+                    'user_id' => auth::id(),
+                    'text' => 'Файл: '.$file_info->name_file.' был закрыт для общего доступа',
+                    'created_at' => $mytime->toDateTimeString(),
+                ]);
+            }else {
+
+                filesModel::shareFile($id_file,'open');
+
+                DB::table('user_history')->insert([
+                    'user_id' => auth::id(),
+                    'text' => 'Файл: '.$file_info->name_file.' был открыт для общего доступа',
+                    'created_at' => $mytime->toDateTimeString(),
+                ]);
+            }
+
+            $data = '{"status":"ok", "text":"Успешно"}';
+        }
+        return json_decode($data);
     }
 }
