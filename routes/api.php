@@ -23,5 +23,10 @@ use Illuminate\Support\Facades\Route;
 });*/
 
 Route::middleware('auth_api')->group(function () {
-    Route::get('/user', [userInfoController::class, 'getUser'])->name('api/getuser');
+
+    Route::get('/user', [userInfoController::class, 'getUser'])->name('api/user');
+
+    Route::get('/user/files', [userInfoController::class, 'getUserFiles'])->name('api/user/files');
+    Route::get('/user/files/info', [userInfoController::class, 'getUserFilesInfo'])->name('api/user/files/info');
+
 });

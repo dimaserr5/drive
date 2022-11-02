@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use Illuminate\Auth\Middleware\Authenticate as Middleware;
+use Illuminate\Support\Facades\DB;
 
 class AuthenticateApi extends Middleware
 {
@@ -11,12 +12,17 @@ class AuthenticateApi extends Middleware
     {
         $api_token = $request->query('api_token');
 
-
-
         if(!empty($api_token)) {
-            return;
+            $api_info = DB::table('api_keys')
+                ->where('api_key', '=', $api_token)
+                ->first();
+            if($api_info) {
+                return;
+            }else {
+                return 403;
+            }
         }else {
-            $this->unauthenticated($request,$guards);
+            return 403;
         }
     }
 
