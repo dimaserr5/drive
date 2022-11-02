@@ -18,10 +18,18 @@ class dashboardController extends Controller
 
         $my_files = filesModel::getMyFiles(auth::id());
 
-        $data['my_files'][] = array();
+        $data['my_files'] = array();
 
         if($my_files) {
+            foreach ($my_files as $file) {
 
+
+
+                $data['my_files'][] = array(
+                    'type'
+                );
+
+            }
         }
 
 
@@ -54,10 +62,14 @@ class dashboardController extends Controller
             $data = '{"status":"error", "text":"'.$error.'"}';
         }else {
 
-            $upload_folder = 'public/user-'.Auth::id();
+            $upload_folder = 'public/userfiles/user-'.Auth::id();
+
             $filename = $file_find->getClientOriginalName();
+
             $filename_download = rand(100,999999)."-".rand(100,9999999).$filename;
+
             Storage::putFileAs($upload_folder, $file_find, $filename_download);
+
             Storage::download($upload_folder."/".$filename_download);
 
             filesModel::addFile($file_find->getClientOriginalExtension(),Storage::url($upload_folder."/".$filename_download),$file_find->getClientOriginalName());

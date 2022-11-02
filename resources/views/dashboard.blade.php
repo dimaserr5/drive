@@ -60,8 +60,11 @@
                     </div>
 
                     <?php if(!$my_files) :?>
+                     <span>Файлов нет</span>
+                    <?php else : ?>
 
-                    <?php
+                    <?php endif; ?>
+
 
 
                 </div>

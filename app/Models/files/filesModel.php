@@ -34,5 +34,11 @@ class filesModel extends Model
 
          return $files;
      }
+
+     public static function getFileAttr($type) {
+
+
+
+     }
     use HasFactory;
 }
