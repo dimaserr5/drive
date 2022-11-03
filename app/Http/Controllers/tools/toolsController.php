@@ -4,11 +4,17 @@ namespace App\Http\Controllers\tools;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-
+/*
+ * Контроллер toolsController отвечает за вспомогательные элементы на сайте
+ */
 class toolsController extends Controller
 {
     public static function formatSizeUnits($bytes)
     {
+        /*
+         * Отвечает за подсчёт размера файла
+         */
+
         if ($bytes >= 1073741824)
         {
             $bytes = number_format($bytes / 1073741824, 2) . ' GB';
@@ -38,6 +44,9 @@ class toolsController extends Controller
     }
 
     public static function generateRandomString($length = 10) {
+        /*
+         * Отвечает за генерацию рамномного значения
+         */
         $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $charactersLength = strlen($characters);
         $randomString = '';

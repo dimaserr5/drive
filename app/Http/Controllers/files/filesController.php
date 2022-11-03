@@ -10,11 +10,17 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
-
+ /*
+  * Контроллер filesController отвечает за информацию о файле открытом в приложении
+  * Так-же отвеает за изменение настроек файла
+  */
 class filesController extends Controller
 {
 
     public function editname(Request $request){
+        /*
+         * Изменяет имя фала
+         */
         $name_file = $request->input('folder_name');
         $id_file = $request->input('file_id');
 
@@ -75,6 +81,9 @@ class filesController extends Controller
     }
 
     public function deletefile(Request $request) {
+        /*
+         * Отвечает за удаление файла
+         */
         $id_file = $request->input('file_id');
 
         $mytime = Carbon::now();
@@ -113,7 +122,9 @@ class filesController extends Controller
     }
 
     public function sharefile(Request $request) {
-
+        /*
+         * Отвечает за функцию "Поделиться файлом"
+         */
         $id_file = $request->input('file_id');
 
         $mytime = Carbon::now();

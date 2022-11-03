@@ -8,9 +8,16 @@ use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
+/*
+ * Модель filesModel отвечает за изменение информации об файле
+ */
+
 class filesModel extends Model
 {
     public static function addFile($file_type,$file_storage,$name_file, $size, $folder = null){
+        /*
+         * Метод addFile отвечает за добавление файла или папки в бд
+         */
         $mytime = Carbon::now();
 
         if($folder) {
@@ -45,7 +52,9 @@ class filesModel extends Model
     }
 
      public static function getMyFiles($user_id, $folder = null){
-
+         /*
+          * Метод getMyFiles отвечает за получение информации о всех файлах
+          */
         if($folder) {
             if($folder == "all") {
                 $files = DB::table('user_files')->where([
@@ -69,13 +78,18 @@ class filesModel extends Model
      }
 
      public static function getInfoFile($file_id){
+        /*
+         * Метод getInfoFile отвечает за показ информации о файле
+         */
          $file = DB::table('user_files')->where('id', $file_id)->first();
 
          return $file;
      }
 
      public static function getFileAttr($type) {
-
+         /*
+          * Метод getFileAttr отвечает за показ атрибутов файла из бд
+          */
          $type_file = DB::table('file_attr')->where('type', $type)->first();
 
          return $type_file;
@@ -83,17 +97,26 @@ class filesModel extends Model
      }
 
      public static function editFileName($file_id, $name){
+        /*
+         * Метод editFileName отвечает за изменение имени файла в бд
+         */
          DB::table('user_files')
              ->where('id', $file_id)
              ->update(['name_file' => $name]);
      }
 
      public static function deleteFile($file_id) {
+         /*
+         * Метод deleteFile отвечает за удаление файла в бд
+         */
          DB::table('user_files')->where('id', '=', $file_id)->delete();
      }
 
      public static function shareFile($file_id,$type) {
-        if($type == "open") {
+         /*
+         * Метод shareFile отвечает за обработку общедоступного файла
+         */
+         if($type == "open") {
             DB::table('user_files')
                 ->where('id', $file_id)
                 ->update(['public_link' => "public_file/file-".$file_id.rand(100,99999)]);
@@ -105,6 +128,9 @@ class filesModel extends Model
      }
 
     public static function checkFolder($folder_id){
+        /*
+       * Метод shareFile отвечает за проверу на существование папки
+       */
         $folder = DB::table('user_files')->where([
             ['type', '=', 'folder'],
             ['storage', '=', $folder_id],
@@ -113,6 +139,9 @@ class filesModel extends Model
     }
 
     public static function getPublicFile($file_public_name) {
+        /*
+       * Метод getPublicFile отвечает генерацию публичной ссылки на файл
+       */
         $file = DB::table('user_files')->where([
             ['public_link', '=', "public_file/".$file_public_name],
         ])->first();

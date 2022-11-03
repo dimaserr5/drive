@@ -11,9 +11,17 @@ use App\Models\blacklisttypesModel;
 use App\Models\files\filesModel;
 use App\Models\user\userModel;
 
+/*
+ * Контроллер dashboardController отвечает за вывод всех файлов а так-же создания папок и показ файлов в них
+ */
+
 class dashboardController extends Controller
 {
     public function getPage() {
+
+        /*
+         * Отвечает за показ всех файлов и папок на главной странице
+         */
 
         $data['settings'] = settingsProgect::getSettings();
 
@@ -65,6 +73,9 @@ class dashboardController extends Controller
     }
 
     public function getPageFolder($folder) {
+        /*
+         * Отвечает за показ всех файлов в папке
+         */
         if(!$folder) {
             return redirect(view('dashboard'));
         }else {
@@ -112,6 +123,9 @@ class dashboardController extends Controller
     }
 
     public function add(Request $request) {
+        /*
+         * Отвечает за добавление файла
+         */
         header('Content-Type: application/json');
 
         $settings = settingsProgect::getSettings();
@@ -161,7 +175,9 @@ class dashboardController extends Controller
     }
 
     public function addFolder(Request $request) {
-
+        /*
+         * Отвечает за добавление папки
+         */
         header('Content-Type: application/json');
 
         $name_folder = $request->input('folder_name');

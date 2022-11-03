@@ -7,9 +7,17 @@ use App\Models\user\userModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
+/*
+ * Контроллер profileController отвечает за вывод информации об аккаунте в приложении
+ */
+
 class profileController extends Controller
 {
     public function get() {
+
+        /*
+         * Отвечает за запрос информации об профиле
+         */
 
         $user_info = userModel::getUser(auth::id());
 
@@ -29,6 +37,10 @@ class profileController extends Controller
     }
 
     public function getapi(Request $request) {
+
+        /*
+         * Отвечает за запрос информации об api ключах
+         */
 
         header('Content-Type: application/json');
 

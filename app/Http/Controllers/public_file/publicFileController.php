@@ -6,10 +6,15 @@ use App\Http\Controllers\Controller;
 use App\Http\Controllers\tools\toolsController;
 use App\Models\files\filesModel;
 use Illuminate\Http\Request;
-
+/*
+ * Контроллер publicFileController отвечает за показ файла для пользователей с ссылкой доступа
+ */
 class publicFileController extends Controller
 {
     public function get($file) {
+        /*
+         * Получает информацию об публичном файле
+         */
         $file_info = filesModel::getPublicFile($file);
 
         if(!$file_info) {

@@ -8,9 +8,16 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
+/*
+ * Контроллер fileInfoController отвечает за вывод информации о приватном файле
+ */
 class fileInfoController extends Controller
 {
     public function file_info($id) {
+
+        /*
+         * Отвечает за вывод информации о приватном файле
+         */
 
         if(!$id) {
             return view('dashboard');
