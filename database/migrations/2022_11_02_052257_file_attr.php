@@ -27,15 +27,15 @@ return new class extends Migration
         ]);
         DB::table('file_attr')->insert([
             'type' => "png",
-            'img' => "/storage/imgs/files_img/image.png"
+            'img' => "/storage/imgs/files_img/img.png"
         ]);
         DB::table('file_attr')->insert([
             'type' => "jpg",
-            'img' => "/storage/imgs/files_img/image.png"
+            'img' => "/storage/imgs/files_img/img.png"
         ]);
         DB::table('file_attr')->insert([
             'type' => "jpeg",
-            'img' => "/storage/imgs/files_img/image.png"
+            'img' => "/storage/imgs/files_img/img.png"
         ]);
     }
 
