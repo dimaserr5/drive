@@ -60,7 +60,7 @@ composer install --ignore-platform-reqs
 apt-get install docker-compose
 ```
 
-В Docker контейнер уже входит сервер базы данных, PostgreSQL, при желании вы моджете изменить базу/логин/пароль, из коробки уже настроена среда PostgreSQL с 
+В Docker контейнер уже входит сервер базы данных, PostgreSQL, при желании вы можете изменить базу/логин/пароль, из коробки уже настроена среда PostgreSQL с 
 База: a4
 Логин: a4
 Пароль: a4
@@ -72,7 +72,37 @@ docker-compose.yml
 
 Заходим в файл .env и меняем поле "APP_URL" на своё значение (IP или домен)
 
-Запускаем проект командой
+Далее настраиваем проект командами
 ```
 ./vendor/bin/sail up -d
+```
+Дожидаемся развертки - далее выдаём права на папки
+```
+sudo chmod -R 777 storage/
+```
+```
+sudo chmod -R 777 bootstrap/cache/
+```
+
+Очищаем BootStrap кеш
+```
+./vendor/bin/sail artisan cache:clear
+```
+Делаем миграцию базы
+```
+sudo ./vendor/bin/sail artisan migrate
+```
+Перезапускаем проект
+```
+sudo ./vendor/bin/sail down
+sudo ./vendor/bin/sail ud -d
+```
+Для разработки - нужно использовать команду
+```
+npm run dev
+```
+
+Для сборки в прод - нужно использовать команду
+```
+npm run build
 ```
