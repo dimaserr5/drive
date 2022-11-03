@@ -22,7 +22,7 @@ return new class extends Migration
 
         DB::table('settings')->insert([
             'progectName' => config('app.name'),
-            'max_file_size' => '20',
+            'max_file_size' => '20971520',
         ]);
     }
 
