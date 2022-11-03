@@ -27,7 +27,7 @@ class fileInfoController extends Controller
                 $data['file_date'] = $file_info->created_at;
 
                 if($file_info->public_link) {
-                    $data['file_public_link'] = "http://".$_SERVER['SERVER_NAME']."/".$file_info->public_link;
+                    $data['file_public_link'] = env('APP_URL')."/".$file_info->public_link;
                 }else {
                     $data['file_public_link'] = "";
                 }
