@@ -1,66 +1,108 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Проект DRIVE
+DRIVE - Это платформа для размещения своих файлов, в ней вы сможете загружать свои файлы, размещать их в открытый доступ а так-же группировать в папки.
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Пробежимя по установке, проект рабоатет на Framework Laravel версии 9, для успешной установки вам потребуется
 
-## About Laravel
+1) Хостинг на linux, желатьельно ubunut 20.04 или выше
+2) Установленный Docker (<a href="https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-on-ubuntu-20-04-ru">Подробнее про установку</a>)
+2) Установленный Compsoer (<a href="https://losst.pro/ustanovka-composer-ubuntu-16-04">Подробнее про установку</a>)
+3) Установленный git на сервере (<a href="https://losst.pro/ustanovka-git-ubuntu-16-04">Подробнее про установку</a>)
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Пробежимя по командам установки
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+Первым делом обновим пакеты
+```
+apt-get update && apt-get upgrade
+```
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+Создадим дерикторию - куда будет установлен проект, в моём случае я буду устанавливать его в дерикторию /home/site
+```
+cd /home
+```
+```
+mkdir site
+```
+```
+chmod -R 755 site
+```
+```
+cd site
+```
 
-## Learning Laravel
+Загружаем наш проект через команду git clone
+```
+git clone https://github.com/dimaserr5/drive.git
+```
+```
+cd drive
+```
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+Устанавливаем nodeJS
+```
+curl -sL https://deb.nodesource.com/setup_14.x | sudo bash -
+```
+```
+sudo apt -y install nodejs
+```
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+Устанавливаем пакеты через npm
+```
+npm install
+```
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+Устанавливаем пакеты composer
+```
+composer install --ignore-platform-reqs
+```
 
-## Laravel Sponsors
+В дополнении к Docker устанавливаем docker-compose
+```
+apt-get install docker-compose
+```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+В Docker контейнер уже входит сервер базы данных, PostgreSQL, при желании вы можете изменить базу/логин/пароль, из коробки уже настроена среда PostgreSQL с 
+База: a4
+Логин: a4
+Пароль: a4
 
-### Premium Partners
+Настройка доступа к базе лежит по пути
+docker-compose.yml
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+Мы будем использовать деф.настройки для подключения.
 
-## Contributing
+Заходим в файл .env и меняем поле "APP_URL" на своё значение (IP или домен)
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Далее настраиваем проект командами
+```
+./vendor/bin/sail up -d
+```
+Дожидаемся развертки - далее выдаём права на папки
+```
+sudo chmod -R 777 storage/
+```
+```
+sudo chmod -R 777 bootstrap/cache/
+```
 
-## Code of Conduct
+Очищаем BootStrap кеш
+```
+./vendor/bin/sail artisan cache:clear
+```
+Делаем миграцию базы
+```
+sudo ./vendor/bin/sail artisan migrate
+```
+Перезапускаем проект
+```
+sudo ./vendor/bin/sail down
+sudo ./vendor/bin/sail ud -d
+```
+Для разработки - нужно использовать команду
+```
+npm run dev
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Для сборки в прод - нужно использовать команду
+```
+npm run build
+```
