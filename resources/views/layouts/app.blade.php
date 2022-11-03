@@ -11,7 +11,8 @@
         <link rel="stylesheet" href="https://fonts.bunny.net/css2?family=Nunito:wght@400;600;700&display=swap">
 
         <!-- Scripts -->
-        @vite(['resources/css/app.css', 'resources/css/style.css', 'resources/js/app.js','resources/js/jquery.js'])
+        <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+        @vite(['resources/css/app.css', 'resources/css/style.css','resources/js/app.js'])
         @vite(['resources/bootstrap/css/bootstrap.css', 'resources/bootstrap/js/bootstrap.bundle.js'])
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css">
     </head>

@@ -15,19 +15,7 @@ class userModel extends Model
 
         $user = DB::table('users')->where('id', $user_id)->first();
 
-        if($user) {
-            $user_info = array(
-                'id' => $user->id,
-                'name' => $user->name,
-                'email' => $user->email,
-                'mem_limit' => $user->mem_limit,
-                'created_at' => $user->created_at,
-            );
-        }else {
-            $user_info = "";
-        }
-
-        return $user_info;
+        return $user;
 
     }
 

@@ -13,9 +13,9 @@ class profileController extends Controller
 
         $user_info = userModel::getUser(auth::id());
 
-        $data['user_name'] = $user_info['name'];
-        $data['user_email'] = $user_info['email'];
-        $data['user_date_reg'] = $user_info['created_at'];
+        $data['user_name'] = $user_info->name;
+        $data['user_email'] = $user_info->email;
+        $data['user_date_reg'] = $user_info->created_at;
 
         $api = userModel::getUserApiKey(auth::id());
 

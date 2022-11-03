@@ -60,7 +60,9 @@
                     </div>
 
                     <?php if(!$my_files) :?>
-                     <span>Файлов нет</span>
+                     <div style="margin-top: 26px;">
+                         <span>Файлов нет</span>
+                     </div>
                     <?php else : ?>
                         <div class="files_block">
                             @foreach($my_files as $file)
