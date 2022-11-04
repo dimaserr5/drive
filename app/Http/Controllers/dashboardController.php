@@ -132,6 +132,8 @@ class dashboardController extends Controller
 
         $file_find = $request->file('file');
 
+        $user_info = userModel::getUser(auth::id());
+
         $error = "";
 
         if(!$file_find) {
@@ -144,6 +146,11 @@ class dashboardController extends Controller
             if(blacklisttypesModel::checkBlackListFile($file_find->getClientOriginalExtension()) AND !$error){
                 $error = "Ошибка, запрещённый тип файла";
             }
+
+            if($file_find->getSize() > $user_info->mem_limit) {
+                $error = "Ошибка, недостаточно места";
+            }
+
         }
 
         if($error) {
