@@ -11,6 +11,14 @@ use Illuminate\Support\Facades\DB;
 /*
  * Модель userModel отвечает за получении и изменении информации о пользователе в БД
  */
+/**
+ * App\Models\user\userModel
+ *
+ * @method static \Illuminate\Database\Eloquent\Builder|userModel newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|userModel newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|userModel query()
+ * @mixin \Eloquent
+ */
 class userModel extends Model
 {
 

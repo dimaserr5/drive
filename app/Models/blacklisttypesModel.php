@@ -10,6 +10,14 @@ use Illuminate\Support\Facades\DB;
  * Модель blacklisttypesModel отвечает за поиск запрещённых типов файла
  */
 
+/**
+ * App\Models\blacklisttypesModel
+ *
+ * @method static \Illuminate\Database\Eloquent\Builder|blacklisttypesModel newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|blacklisttypesModel newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|blacklisttypesModel query()
+ * @mixin \Eloquent
+ */
 class blacklisttypesModel extends Model
 {
     public static function checkBlackListFile($types){

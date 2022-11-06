@@ -10,6 +10,14 @@ use Illuminate\Support\Facades\DB;
  * Модель settingsProgect отвечает за настройки проекта
  */
 
+/**
+ * App\Models\settingsProgect
+ *
+ * @method static \Illuminate\Database\Eloquent\Builder|settingsProgect newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|settingsProgect newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|settingsProgect query()
+ * @mixin \Eloquent
+ */
 class settingsProgect extends Model
 {
     public static function getSettings() {

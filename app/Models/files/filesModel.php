@@ -12,6 +12,14 @@ use Illuminate\Support\Facades\DB;
  * Модель filesModel отвечает за изменение информации об файле
  */
 
+/**
+ * App\Models\files\filesModel
+ *
+ * @method static \Illuminate\Database\Eloquent\Builder|filesModel newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|filesModel newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|filesModel query()
+ * @mixin \Eloquent
+ */
 class filesModel extends Model
 {
     public static function addFile($file_type,$file_storage,$name_file, $size, $folder = null){

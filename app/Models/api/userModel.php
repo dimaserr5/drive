@@ -10,6 +10,14 @@ use Illuminate\Support\Facades\DB;
  * Модель userModel отвечает за получение информации об пользователии/файлах из бд посредством api
  */
 
+/**
+ * App\Models\api\userModel
+ *
+ * @method static \Illuminate\Database\Eloquent\Builder|userModel newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|userModel newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|userModel query()
+ * @mixin \Eloquent
+ */
 class userModel extends Model
 {
     public static function getUserByApiKey($api_key){
